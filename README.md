@@ -1,4 +1,4 @@
-<h3>Hospital frontend app for staff members</h3>
+## Hospital frontend app for staff members
 
 <p>Built with Angular 14</p>
 
