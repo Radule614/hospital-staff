@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs';
+import { UserDataService } from '../../pages/login/log-user-data.service';
 import { Appointment } from '../model/appointment.model';
 import { Patient } from '../model/patient.model';
 import { AppointmentService } from '../services/appointment.service';
 import { PatientService } from '../services/patient.service';
+import { PhysicianScheduleService } from '../services/physician-schedule.service';
 
 @Component({
   selector: 'app-create-appointment',
@@ -15,6 +18,7 @@ export class CreateAppointmentComponent implements OnInit {
   public patients: Patient[] = [];
   startDate = new Date();
   public isPatientSelected: boolean = false;
+  public doctorId: number = 0;
   
   times = [
     {value: '8:00', viewValue: '8:00'},
@@ -38,13 +42,20 @@ export class CreateAppointmentComponent implements OnInit {
     {value: '17:00', viewValue: '17:00'}
   ];
 
-  constructor(private patientService: PatientService, private appointmentService: AppointmentService) { 
+  constructor(private patientService: PatientService, private appointmentService: AppointmentService, private physicianScheduleService: PhysicianScheduleService, private userDataService : UserDataService) { 
+    this.userDataService.m_UserData$.pipe(tap(user_data => {
+      if(user_data != null) {
+        this.doctorId = user_data.UserId;
+        this.appointment.doctorId = user_data.UserId;
+      }
+    })).subscribe();
   }
 
   ngOnInit(): void {
     this.patientService.getPatients().subscribe(res => {
       this.patients = res;
     })
+
   }
 
   public createAppointment() {
@@ -56,9 +67,9 @@ export class CreateAppointmentComponent implements OnInit {
       alert("You can't choose date from past!");
       return;
     }
-    this.appointmentService.createAppointment(this.appointment).subscribe(res => {
+    this.appointmentService.createAppointment(this.doctorId, this.appointment).subscribe(res => {
       //this.router.navigate(['/rooms']);
-      if (res.appointmentId === 0){
+      if (res === 0){
         alert("Choose another appointment!");
       }
       else {

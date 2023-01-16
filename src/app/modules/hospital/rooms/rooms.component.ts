@@ -20,7 +20,6 @@ export class RoomsComponent implements OnInit {
   ngOnInit(): void {
 
     this.roomService.getRoom(1).subscribe(res => {
-      alert("Hej")
     })
 
     this.roomService.getRooms().subscribe(res => {

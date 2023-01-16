@@ -42,4 +42,8 @@ export class RoomService {
     return this.http.get<Room[]>(this.apiHost + 'api/rooms/' + buildingId + "/" + floor, {headers: this.headers});
   }
 
+  checkMoveRequests(): Observable<any> {
+    return this.http.get<any>(this.apiHost + 'api/rooms/moveRequests/check', {headers: this.headers});
+  }
+
 }

@@ -16,7 +16,7 @@
                         </mat-select> 
                       </mat-form-field>
                       <div>
-                        <button mat-raised-button color="primary" class="stepper-button" matStepperNext>Dalje</button>
+                        <button mat-raised-button color="primary" class="stepper-button" matStepperNext (click)="createEvent('RenovationDetailsPageOpened')">Dalje</button>
                       </div>
                     </div>
                 </mat-step>
@@ -54,8 +54,8 @@
                     <span matSuffix> dana</span>
                   </mat-form-field>
                     <div>
-                      <button mat-stroked-button color="primary" class="stepper-button" matStepperPrevious>Nazad</button>
-                      <button mat-raised-button (click)="findFreeTimeSlots()" color="primary" class="stepper-button" matStepperNext>Dalje</button>
+                      <button mat-stroked-button color="primary" class="stepper-button" matStepperPrevious  (click)="createEvent('RenovationTypePageOpened')">Nazad</button>
+                      <button mat-raised-button (click)="findFreeTimeSlots()" color="primary" class="stepper-button" matStepperNext  (click)="createEvent('RoomDetailsPageOpened')">Dalje</button>
                     </div>
                   </div>
                 </mat-step>
@@ -66,7 +66,7 @@
                     <div class="container">
                       <div class="row justify-content-around">
                         <div class="col-4">
-                          <h2 *ngIf="selectedRenovationType == 'merging'">Prostorija 1</h2>
+                          <h2 *ngIf="selectedRenovationType != 'merging'">Prostorija 1</h2>
                           <mat-form-field appearance="fill">
                             <mat-label>Naziv sobe</mat-label>
                             <input matInput placeholder="npr. 101.1">
@@ -77,7 +77,7 @@
                             <textarea matInput rows="4" cols="50"></textarea>
                           </mat-form-field>
                         </div>
-                        <div class="col-4" *ngIf="selectedRenovationType == 'merging'">
+                        <div class="col-4" *ngIf="selectedRenovationType != 'merging'">
                           <h2>Prostorija 2</h2>
                           <mat-form-field appearance="fill">
                             <mat-label>Naziv prostorije</mat-label>
@@ -94,16 +94,14 @@
                     
 
                     <div>
-                      <button  mat-stroked-button color="primary" class="stepper-button" matStepperPrevious>Nazad</button>
-                      <button mat-raised-button color="primary" class="stepper-button" matStepperNext>Dalje</button>
+                      <button  mat-stroked-button color="primary" class="stepper-button" matStepperPrevious  (click)="createEvent('RenovationDetailsPageOpened')">Nazad</button>
+                      <button mat-raised-button color="primary" class="stepper-button" matStepperNext  (click)="createEvent('AppointmentsPageOpened')">Dalje</button>
                     </div>
                   </div>
                 </mat-step>
                   <mat-step>
                     <ng-template matStepLabel>Termini</ng-template>
                     <div class="step">
-
-
                       <h2>Lista slobodnih termina:</h2>
                       <table class="table table-hover appointments-table">
                         <thead>
@@ -124,10 +122,9 @@
                         </tbody>
                       </table>    
 
-
                       <div>
-                        <button mat-stroked-button color="primary" class="stepper-button" matStepperPrevious>Nazad</button>
-                        <button mat-stroked-button color="primary" class="stepper-button" (click)="stepper.reset()">Resetuj</button>
+                        <button mat-stroked-button color="primary" class="stepper-button" matStepperPrevious  (click)="createEvent('RoomDetailsPageOpened')">Nazad</button>
+                        <button mat-stroked-button color="primary" class="stepper-button" (click)="stepper.reset()"  (click)="createEvent('RenovationTypePageOpened')">Resetuj</button>
                       </div>
                     </div>
                 </mat-step>

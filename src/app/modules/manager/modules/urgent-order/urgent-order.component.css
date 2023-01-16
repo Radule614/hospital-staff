@@ -29,3 +29,8 @@
   margin-top: 20px;
   margin-bottom: 100px;
 }
+
+.dates {
+  display: flex;
+  flex-direction: column;
+}

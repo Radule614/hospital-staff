@@ -12,15 +12,18 @@ import { VacationRequestsComponent } from "./modules/vacations/vacation-requests
 import { ScheduleRenovationComponent } from './modules/hospital/schedule-renovation/schedule-renovation.component';
 import { CreateConsiliumComponent } from "./modules/hospital/create-consilium/create-consilium.component";
 import { AuthGuard } from "./modules/pages/login/log-auth.guard";
+import { DoctorsWorkloadComponent } from "./modules/statistics/doctors-workload/doctors-workload.component";
+import { RenovationStatisticComponent } from "./modules/statistics/renovation-statistic/renovation-statistic.component";
+import { CurrentBloodSupplyComponent } from './modules/hospital/current-blood-supply/current-blood-supply.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'doctor-appointment-display', component : DoctorAppointmentDisplayComponent},
   { path: 'create-consilium', component : CreateConsiliumComponent},
+  { path: 'blood/supply', component: CurrentBloodSupplyComponent },
   {
     path: 'manager',
-    loadChildren: () => import('./modules/manager/manager.module').then(m => m.ManagerModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./modules/manager/manager.module').then(m => m.ManagerModule)
   },
   { path: 'create-vacation-display', component : CreateVacationComponent  },
   { path: 'vacation-requests-display' , component : VacationRequestsDisplayComponent },
@@ -30,12 +33,10 @@ const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
-  { path: 'hospitalMap', component: HospitalMapComponent },
-  { path: 'hospitalMap/hospital/:id', component: HospitalFloorComponent },
-  { path: 'hospitalMap/hospital/:id/floor/:floorId', component: RoomsMapComponent },
-  { path: 'hospitalMap/hospital/:id/floor/:floorId/room/:roomId', component: RoomsMapComponent },
   { path: 'vacationRequests', component: VacationRequestsComponent },
-  { path: 'renovation/hospital/:hospitalId/floor/:floorId', component: ScheduleRenovationComponent },
+  { path: 'blood/supply', component: CurrentBloodSupplyComponent  },
+  
+  
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 

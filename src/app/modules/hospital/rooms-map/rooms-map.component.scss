@@ -99,3 +99,23 @@ width: 100%;
     margin-bottom: 20px;
     display: none;
 }
+
+.map{
+    transition: all 2s ease-in;
+}
+
+.col-12 {
+    flex-grow: 1;
+    transition: all 900ms ease;
+}
+  
+.col-8 {
+    width: 0; 
+    flex-shrink: 1;
+    transition: all 900ms ease;
+}
+
+.hidden{
+    display: none;
+}
+

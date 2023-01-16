@@ -40,7 +40,7 @@ export class HospitalFloorComponent implements OnInit {
     .enter()
     .append("a")
     .attr("xlink:href", function(this: any, d: any){
-      return "hospitalMap/hospital/" + buildingId + "/floor/" + d;
+      return "manager/hospitalMap/hospital/" + buildingId + "/floor/" + d;
     })
     .append("rect")
     .attr("x", 0)

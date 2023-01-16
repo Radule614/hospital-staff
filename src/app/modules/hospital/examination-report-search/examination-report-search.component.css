@@ -1,0 +1,46 @@
+h1 
+{
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    font-weight: bold;
+}
+
+#table1 {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #table1 td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+
+  #table1 th {
+    border: 2px solid black ;
+    padding: 8px;
+    background: #673ab7;
+    color: white;
+  }
+
+  #table1 tr {
+    border: 2px solid black;
+    padding: 8px;
+  }
+
+  td 
+  { 
+  text-align: center;
+  }
+
+.clickable:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+.cell-center {
+  text-align: center;
+}
+
+input {
+    width: 10%;
+}

@@ -1,0 +1,19 @@
+<html>  
+  <body>
+    <input #searchbar type="text" [(ngModel)]="searchText" (keyup)="getExaminationReport()">
+    <br>
+    <table id="table1"> 
+         <tr>
+            <th>Id</th>
+            <th>Report</th>
+            <th>Medicines</th>
+          </tr>
+          <tr *ngFor="let report of dataSource; let i = index"> 
+            <td>{{report.examinationReportId}}</td>
+            <td>{{report.report}}</td>  
+            <td>{{listMedicines[i]}}</td>
+          </tr>
+        </table>
+      
+  </body>
+  </html>

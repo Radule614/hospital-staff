@@ -47,7 +47,7 @@ export class HospitalMapComponent implements OnInit {
     .enter()
     .append("a")
     .attr("xlink:href", function(d: any){
-      return "hospitalMap/hospital/" + d.building.id;
+      return "manager/hospitalMap/hospital/" + d.building.id;
     })
     .append("rect")
     .attr("x", function(d: any, i: any){

@@ -51,7 +51,7 @@ export class ViewConsiliumsComponent implements OnInit {
     //hardkodovano
 
         
-    this.consiliumService.getDoctorConsiliums(this.id ).subscribe(res => {
+    this.consiliumService.getDoctorConsiliums(this.id).subscribe(res => {
         this.consiliums = res; 
         this.dataSource.data = this.consiliums;
    //     this.consiliums[1].doctors ='dd'

@@ -7,6 +7,7 @@ import {FormGroup, FormControl} from '@angular/forms';
 import { FreeAppointmentRequestDTO } from '../model/free-appointment-request-dto';
 import { MoveRequest } from '../model/move-request';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EventService } from '../../statistics/services/event-service.service';
 
 @Component({
   selector: 'app-schedule-renovation',
@@ -31,7 +32,9 @@ export class ScheduleRenovationComponent implements OnInit {
     end: new FormControl<Date | null>(null),
   });
 
-  constructor(private roomMapService: RoomMapService, private _route: ActivatedRoute,  private router: Router) { 
+  successfulSchedule = false;
+
+  constructor(private roomMapService: RoomMapService, private eventService: EventService, private _route: ActivatedRoute,  private router: Router) { 
     this.buildingId =  this._route.snapshot.paramMap.get('hospitalId');
     this.floorId = this._route.snapshot.paramMap.get('floorId');
   }
@@ -39,14 +42,21 @@ export class ScheduleRenovationComponent implements OnInit {
   ngOnInit(): void {
     this.roomMapService.getRoomsByBuildingFloor(this.buildingId, this.floorId).subscribe(res => {
       this.rooms = res;
-    });    
+    });     
+    this.createEvent("RenovationTypePageOpened");
+  }
+
+  ngOnDestroy(): void {
+    if(this.successfulSchedule != true){
+      this.createEvent("Canceled");
+    }
   }
 
   findFreeTimeSlots(){
     this.freeAppointmentRequestDTO.firstRoomId = this.firstRoom.id;
     this.freeAppointmentRequestDTO.secondRoomId = this.secondRoom.id;
-    this.freeAppointmentRequestDTO.wantedStartDate = this.range.value.start;
-    this.freeAppointmentRequestDTO.wantedEndDate = this.range.value.end;
+    this.freeAppointmentRequestDTO.wantedStartDate = this.fixChosenDate(this.range.value.start!);
+    this.freeAppointmentRequestDTO.wantedEndDate = this.fixChosenDate(this.range.value.end!);
     this.freeAppointmentRequestDTO.durationTimeUnit = "days";
 
     this.roomMapService.getFreeTimeSlotForRooms(this.freeAppointmentRequestDTO).subscribe(res => {
@@ -60,12 +70,18 @@ export class ScheduleRenovationComponent implements OnInit {
     return result;
   }
 
+  fixChosenDate(date: Date) : Date{
+    var result = new Date(date);
+    result.setHours(1);
+    return result;
+  }
+
   scheduleRenovation(startDate: Date){
     this.moveRequest.firstRoomId = this.freeAppointmentRequestDTO.firstRoomId;
     this.moveRequest.secondRoomId = this.freeAppointmentRequestDTO.secondRoomId;
     this.moveRequest.duration = this.freeAppointmentRequestDTO.duration;
     this.moveRequest.durationTimeUnit = this.freeAppointmentRequestDTO.durationTimeUnit;
-    this.moveRequest.chosenStartTime = startDate;
+    this.moveRequest.chosenStartTime = this.fixChosenDate(startDate);
 
 
     if(this.selectedRenovationType == "merging"){
@@ -79,9 +95,17 @@ export class ScheduleRenovationComponent implements OnInit {
       });;
     }
 
-    this.router.navigate(['/hospitalMap/hospital/' + this.buildingId +'/floor/'+ this.floorId])
+    this.createEvent("RenovationScheduled");
+    this.router.navigate(['manager/hospitalMap/hospital/' + this.buildingId +'/floor/'+ this.floorId])
 
+  }
 
+  createEvent(eventType: string){
+    this.eventService.createEvent(eventType).subscribe(res => {
+    });  
+    if(eventType == "RenovationScheduled"){
+      this.successfulSchedule = true;
+    }
   }
 
 }

@@ -17,10 +17,10 @@ export class AppointmentService {
 
   constructor(private http: HttpClient) { }
 
-  createAppointment(appointment: any): Observable<any> {
+  createAppointment(doctorId: any, appointment: any): Observable<any> {
     appointment.date.setHours(1);
     console.log(appointment.date);
-    return this.http.post<any>(this.apiHost + 'api/appointments', appointment, {headers: this.headers});
+    return this.http.post<any>(this.apiHost + 'api/physicianSchedules/' + doctorId, appointment, {headers: this.headers});
   }
 
   getDoctorAppointments(doctorId:number): Observable<any[]> {

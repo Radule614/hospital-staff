@@ -11,6 +11,7 @@ import {ViewChild} from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MoveRequest } from '../model/move-request';
+import { RoomService } from '../services/room.service';
 
 
 @Component({
@@ -23,11 +24,53 @@ import { MoveRequest } from '../model/move-request';
       state('expanded', style({height: '*'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
+    trigger(
+      'inOutAnimation', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({ transform: 'translateX(100%)', opacity: 0 }),
+            animate('0.7s ease-out', 
+                    style({ transform: 'translateX(0)', opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({ height: 300, opacity: 1 }),
+            animate('1s ease-in', 
+                    style({ height: 0, opacity: 0 }))
+          ]
+        )
+      ]
+    ),
+    trigger(
+      'inOutAnimationMap', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({ opacity: 0 }),
+            animate('0.7s ease-out', 
+                    style({ opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({ height: 300, opacity: 1 }),
+            animate('1s ease-in', 
+                    style({ height: 0, opacity: 0 }))
+          ]
+        )
+      ]
+    )
   ]
 })
 export class RoomsMapComponent implements OnInit {
 
-  constructor(private roomMapService: RoomMapService, private equipmentService: EquipmentService, 
+  constructor(private roomMapService: RoomMapService, private equipmentService: EquipmentService, private roomService: RoomService,
     private _route: ActivatedRoute, private router: Router) {
       
     this.buildingId = this._route.snapshot.paramMap.get('id');
@@ -63,6 +106,13 @@ export class RoomsMapComponent implements OnInit {
   minDate: Date = new Date(2022, 10, 10);
   
   ngOnInit(): void {
+
+    this.roomService.checkMoveRequests().subscribe(res => {
+      if(res == true){
+        location.reload();
+      }
+    });
+
     if (this.buildingId == "A"){
       this.svgWidth = 400;
       this.svgHeight = 790;
@@ -71,6 +121,8 @@ export class RoomsMapComponent implements OnInit {
       this.svgWidth = 1000;
       this.svgHeight = 800;
     }
+
+
 
     this.roomMapService.getRoomsByBuildingFloor(this.buildingId, this.floorId).subscribe(res => {
       this.rooms = res;
@@ -103,7 +155,8 @@ export class RoomsMapComponent implements OnInit {
 
   private createRect(rooms: RoomMap[], selectedRoom: Room, selectedRoomEquipment: Equipment[], requests: MoveRequest[], table: any, requestTable: any, roomId: any): void{
     var service = this.equipmentService;
-    var roomService = this.roomMapService;
+    var roomService = this.roomService;
+    var roomMapService = this.roomMapService;
     var rect = this.svg.selectAll("rect")
     .data(rooms)
     .enter()
@@ -159,13 +212,24 @@ export class RoomsMapComponent implements OnInit {
       selectedRoom.floor = i.floor;
       selectedRoom.description = i.description;
 
+      roomService.getRoom(i.id).subscribe((res: any) => {
+        if(res.buildingId == "A"){
+          selectedRoom.buildingId = "Bolnica";
+        }
+        else{
+          selectedRoom.buildingId = "Laboratorija";
+        }
+        selectedRoom.floor = res.floor;
+        selectedRoom.description = res.description;
+      })
+
       service.getEquipmentByRoomId(i.id).subscribe((res: any) => {
         selectedRoomEquipment.splice(0,selectedRoomEquipment.length);
         selectedRoomEquipment.push(...res);
         table.renderRows();
       })
 
-      roomService.getRequestsForRoom(i.id).subscribe((res: any) =>{
+      roomMapService.getRequestsForRoom(i.id).subscribe((res: any) =>{
         requests.splice(0,requests.length);
         requests.push(...res);
         requestTable.renderRows();
@@ -195,7 +259,7 @@ export class RoomsMapComponent implements OnInit {
   }
 
   redirectToRenovation(){
-    this.router.navigate(['/renovation/hospital/' + this.buildingId +'/floor/'+ this.floorId])
+    this.router.navigate(['manager/renovation/hospital/' + this.buildingId +'/floor/'+ this.floorId])
   }
 
   cancelRequest(request: MoveRequest){

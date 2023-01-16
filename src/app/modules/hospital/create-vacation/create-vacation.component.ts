@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { ThisReceiver } from '@angular/compiler';
 import { Appointment } from '../model/appointment.model';
 import { AppointmentService } from '../services/appointment.service';
-import { startWith } from 'rxjs';
+import { startWith, tap } from 'rxjs';
+import { UserDataService } from '../../pages/login/log-user-data.service';
 
 @Component({
   selector: 'app-create-vacation',
@@ -36,8 +37,15 @@ export class CreateVacationComponent implements OnInit {
   appointmentStart : Date = new Date();
 
   isActivated: any;
+  public doctorId: number = 0;
 
-  constructor(private vacationService: VacationService,private router: Router,private appointmentService: AppointmentService) { }
+  constructor(private vacationService: VacationService,private router: Router,private appointmentService: AppointmentService, private userDataService : UserDataService) { 
+    this.userDataService.m_UserData$.pipe(tap(user_data => {
+      if(user_data != null) {
+        this.doctorId = user_data.UserId;
+      }
+    })).subscribe();
+  }
 
   public createVacationRequest(vacationRequest : VacationRequest)
   {
@@ -112,7 +120,7 @@ export class CreateVacationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.vacationRequest.doctorId = 5;
+    this.vacationRequest.doctorId = this.doctorId;
     this.fourDaysFromNow.setDate( this.fourDaysFromNow.getDate() + 4 ); 
     this.vacationRequest.urgency = "NoUrgent"; 
     this.isActivated = true;
@@ -123,4 +131,6 @@ export class CreateVacationComponent implements OnInit {
     this.isScheduled = false;
   }
 }
+
+
 

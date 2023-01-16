@@ -16,4 +16,9 @@ export class MedicineService {
   getMedicines(): Observable<Medicine[]> {
     return this.http.get<Medicine[]>(this.apiHost + "api/medicines", {headers: this.headers});
   }
+
+  getSelectedMedicines(ids: number[]): Observable<Medicine[]> {
+    return this.http.get<Medicine[]>(this.apiHost + 'api/medicines/' + ids, {headers: this.headers});
+  }
+
 }

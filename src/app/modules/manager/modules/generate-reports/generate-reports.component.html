@@ -1,0 +1,19 @@
+<section class="outer">
+  <form class="example-form inner" [formGroup]="form">
+    <h1 class="heading">Generate reports</h1>
+    <mat-form-field appearance="fill" color="accent" class="example-full-width generate-report-mat-form-field">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker" disabled>
+        <input matStartDate formControlName="date-from" placeholder="Start date">
+        <input matEndDate formControlName="date-to" placeholder="End date">
+      </mat-date-range-input>    
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+    </mat-form-field>
+    <div class="button-group">
+      <button type="button" (click)="GenerateUrgentReport()" mat-button>Urgent orders report</button>
+      <button type="button" (click)="GenerateTenderReport()" mat-button>Tenders report</button>
+    </div>
+  </form>
+</section>>

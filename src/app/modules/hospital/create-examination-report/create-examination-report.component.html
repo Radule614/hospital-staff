@@ -1,0 +1,98 @@
+
+<mat-horizontal-stepper [linear]=true #stepper="matHorizontalStepper">
+
+  <mat-step> 
+    <form>
+      <div>
+        <mat-select placeholder="Select patient" name="patients" [(ngModel)]="examinationReport.appointmentId" >
+          <mat-option *ngFor="let appointment of appointments" [value]=appointment.id>
+            {{ appointment.patient.name + ' ' + appointment.patient.surname }}
+          </mat-option>
+        </mat-select>
+      </div>
+      <div>
+        <button mat-button matStepperNext (click)="startExamination()">Next</button>
+      </div>
+    </form> 
+  </mat-step>
+
+    <mat-step> 
+      <form>
+        <div>
+        <mat-select [formControl]="selectedSymptomIds" multiple placeholder="Select symptoms">
+          <mat-option *ngFor="let sym of symptoms" [value]="sym.symptomId"> {{sym.name}} </mat-option>
+        </mat-select>
+        </div>
+        <div>
+          <button mat-button matStepperNext (click)="callAll()">Next</button>
+        </div>
+      </form> 
+    </mat-step>
+
+    <mat-step>
+      <mat-form-field appearance="fill">
+        <textarea cols="500" rows="30"  matInput placeholder="Enter examination report" [(ngModel)]="examinationReport.report">
+        </textarea>
+      </mat-form-field> <br>
+      <div>
+        <button mat-button matStepperNext (click)="addReport()">Next</button> <button mat-button matStepperPrevious (click)="addSymptoms()">Back</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <form>
+        <div>
+          <mat-select [formControl]="selectedMedicinesIds" multiple placeholder="Select medicines">
+            <mat-option *ngFor="let med of medicines" [value]="med.medicineId"> {{med.name}} </mat-option>
+          </mat-select>
+          </div>
+
+        <mat-form-field appearance="fill">
+          <textarea name="text" rows="5"  matInput placeholder="Enter way of usage" [(ngModel)]="wayOfUse" required>
+
+          </textarea>
+        </mat-form-field> <br>
+
+        <div>
+          <button mat-button matStepperNext (click)="addRecipes()">Next</button> <button mat-button matStepperPrevious (click)="addReport()">Back</button> <button (click)="createRecipe()" mat-button>Add</button>
+        </div>
+      </form>
+     
+    </mat-step>
+    
+    <mat-step>
+      <table *ngIf="clicked">
+        <tr>
+          <th> Symptoms </th>
+        </tr>
+        <tr *ngFor="let symptom of selectedSymptoms">
+          <td> {{ symptom.name }} </td>
+        </tr>
+      </table>
+      <br><br>
+
+      <table *ngIf="clicked">
+        <tr>
+          <th> Report </th>
+        </tr>
+        <tr>
+          <td> {{ examinationReport.report }} </td>
+        </tr>
+      </table>
+      <br><br>
+
+      <table *ngIf="clicked">
+        <tr>
+          <th> Medicines </th>
+        </tr>
+        <tr *ngFor="let medicine of selectedMedicines">
+          <td> {{ medicine.name }} </td>
+        </tr>
+      </table>
+      <br><br>
+
+
+      <button mat-button (click)="all()"> Finish </button> <button mat-button matStepperPrevious (click)="addRecipes()">Back</button> <button mat-button (click)="viewReport()"> Summary </button>
+    </mat-step>
+  </mat-horizontal-stepper>
+  

@@ -14,14 +14,15 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   m_Form: UntypedFormGroup = this.formInstance;
   m_Errors: string[] = [];
-
+  isTrue: number = 0;
   constructor(private m_AuthService: AuthService, private m_SnackBar: MatSnackBar, private m_Router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-   
+    
+    
     this.m_Errors.length = 0;
     const dto: LoginDTO = this.m_Form.getRawValue();
     if (!this.m_Form.valid) return;
@@ -30,11 +31,13 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
           if(data){
             if(data.Role == 2)this.m_Router.navigate(['/manager']);
-            if(data.Role == 1)this.m_Router.navigate(['/hospital/consiliums']);          
-           
+            if(data.Role == 1)this.m_Router.navigate(['/hospital/examinationreport/create']);          
+            this.isTrue =1
            
           }
+          //alert("Hej")
       });
+   
   }
 
   get formInstance(): UntypedFormGroup {

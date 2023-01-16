@@ -1,0 +1,65 @@
+
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div class="container-fluid px-5">
+    <div class="row text-center justify-content-center pt-5">
+        <div class="col-12"><h1>Statistike vezane za zakazivanje renoviranja</h1></div>
+    </div>
+    <div class="row text-center justify-content-center pt-5">
+        <div class="col-6">
+            <div class="chart-container">
+                <canvas class="bar-chart"  id="AverageNumberOfViewsForEachStep" >{{ chart }}</canvas>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="chart-container">
+                <canvas class="bar-chart"  id="AveragePageTimeInSeconds" >{{ chart }}</canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center justify-content-center pt-5">
+
+        <div class="col-6">
+            <div class="chart-container">
+                <canvas class="bar-chart"  id="AverageNumberOfViewsForEachStepCanceled" >{{ chart }}</canvas>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="chart-container">
+                <canvas class="bar-chart"  id="AveragePageTimeInSecondsCanceled" >{{ chart }}</canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center justify-content-center pt-5">
+
+        <div class="col-6">
+            <div class="chart-container">
+                <canvas class="bar-chart"  id="NumberOfSchedules" >{{ chart }}</canvas>
+            </div>
+        </div>
+        <div class="col-6 pt-5">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <td class="align-middle">Prosecan broj koraka pri uspesnom zakazivanju</td>
+                        <td class="align-middle">{{averageNumberOfStepsForSuccessfulSchedule}}</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">Prosecan broj koraka pri neuspesnom zakazivanju</td>
+                        <td class="align-middle">{{averageNumberOfStepsForCanceledSchedule}}</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">Prosecno vreme pri uspesnom zakazivanju</td>
+                        <td class="align-middle">{{averageTimeForSuccessfulSchedule}}</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">Prosecno vreme pri neuspesnom zakazivanju</td>
+                        <td class="align-middle">{{averageTimeForCanceledSchedule}}</td>
+                    </tr>
+                </tbody>
+              </table>   
+        </div>
+    </div>
+</div>

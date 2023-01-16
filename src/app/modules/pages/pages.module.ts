@@ -7,6 +7,7 @@ import { MaterialModule } from "src/app/material/material.module";
 import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 const routes: Routes = [
   { path: 'appointments', component: DoctorAppointmentDisplayComponent },
@@ -24,6 +25,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
-  ]
+    MatSidenavModule,
+  ],
+  exports: [
+  ],
 })
 export class PagesModule { }

@@ -17,6 +17,10 @@ export class ManagerNavComponent {
       title: 'Feedback'
     },
     {
+      path: 'hospitalMap',
+      title: 'Hospital Map'
+    },
+    {
       path: 'bb-register',
       title: 'Blood bank register'
     },
@@ -47,6 +51,18 @@ export class ManagerNavComponent {
     {
       path: 'notifications',
       title: 'Notifications'
+    },
+    {
+      path: 'appointment-statistics',
+      title: 'Appointment Statistics'
+    },
+    {
+      path: 'renovationStatistic',
+      title: 'Renovation Statistics'
+    },
+    {
+      path: 'generate-reports',
+      title: 'Generate Reports'
     }
   ];
 

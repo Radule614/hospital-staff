@@ -17,6 +17,16 @@ select{
 background-color: red;
 }
 
+div {
+    width: 40%;
+    margin: auto;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin: auto;
+  }
+
 
 
 

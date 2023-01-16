@@ -51,7 +51,7 @@ export class CreateInpatientTreatmentComponent implements OnInit {
     if (this.isValid()) {
       this.inpatientTreatment.dateOfAdmission.setHours(this.inpatientTreatment.dateOfAdmission.getHours() + 1);
       this.inpatientTreatmentService.createInpatientTreatment(this.inpatientTreatment).subscribe(res => {
-        alert("Request is sent!");
+        alert("Created!");
       });
       } else {
         alert("All fields must be filled!");

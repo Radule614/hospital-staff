@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="table-header">
+        <p class="table-title">Current blood supply</p>
+    </div>
+    <table mat-table [dataSource]="dataSource" >
+       <!--
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> title </th>
+            <td mat-cell *matCellDef="let tender" class="cell-center">{{tender.title}}</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> amount </th>
+            <td mat-cell *matCellDef="let tender" *ngFor="let b of ternder.requirements" class="cell-center">{{tender.amount}}</td>
+        </ng-container>
+        
+      <table mat-table [dataSource]="dataSource" >
+            <ng-container matColumnDef="title">
+            </ng-container>
+        </table>-->
+       <ng-container matColumnDef="bloodType">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Blood type </th>
+            <td mat-cell *matCellDef="let blood" class="cell-center">{{blood.bloodType}}</td>
+        </ng-container>
+        <ng-container matColumnDef="quantityInMiliters">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Blood quantity in milliters</th>
+            <td mat-cell *matCellDef="let blood" class="cell-center">{{blood.quantityInLiters}}</td>
+        </ng-container>
+        <ng-container matColumnDef="expiresOn">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Date </th>
+            <td mat-cell *matCellDef="let blood" class="cell-center">{{blood.expiresOn | date: 'dd.MM.yyyy'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Tender </th>
+            <td mat-cell *matCellDef="let blood" class="cell-center">{{blood.title}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

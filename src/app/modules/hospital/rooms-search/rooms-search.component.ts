@@ -34,4 +34,11 @@ export class RoomsSearchComponent implements OnInit {
     this.rooms.filter = filterValue.trim().toLowerCase();
   }
 
+  getBuildingName(buildingId: string): string {
+    if(buildingId == "A"){
+      return "Bolnica";
+    }
+    return "Laboratorija"
+  }
+
 }
